@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Review Form</title>
+    <link rel="stylesheet" href="reviews.css">
+</head>
+<body>
+    <div class="review-form-container">
+        <!-- Top Half: Reviews Table -->
+        <div class="reviews-section">
+            <h2>Reviews</h2>
+            <table class="reviews-table">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Doctor Name</th>
+                        <th>Specialty</th>
+                        <th>Rating</th>
+                        <!--<th>Provide Review</th>-->
+                        <th>Review Given</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="checkbox" class="doctor-checkbox" data-doctor-name="Dr. John Doe"></td>
+                        <td>Dr. John Doe</td>
+                        <td>Cardiologist</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <!--<td><button class="give-review-btn">Give Review</button></td>-->
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="doctor-checkbox" data-doctor-name="Dr. Jane Smith"></td>
+                        <td>Dr. Jane Smith</td>
+                        <td>Dermatologist</td>
+                        <td>⭐⭐⭐⭐</td>
+                        <!--<td><button class="give-review-btn">Give Review</button></td>-->
+                        <td>No</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="doctor-checkbox" data-doctor-name="Dr. Emily Adams"></td>
+                        <td>Dr. Emily Adams</td>
+                        <td>Neurologist</td>
+                        <td>⭐⭐⭐⭐⭐</td>
+                        <!--<td><button class="give-review-btn">Give Review</button></td>-->
+                        <td>No</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Bottom Half: Submit Review Form -->
+        <div class="submit-review-section">
+            <form id="reviewForm">
+                <div class="form-group">
+                    <label for="patientName">Your Name:</label>
+                    <input type="text" id="patientName" name="patientName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="rating">Rating (out of 5):</label>
+                    <select id="rating" name="rating" required>
+                        <option value="">Select Rating</option>
+                        <option value="1">⭐ - Poor</option>
+                        <option value="2">⭐⭐ - Fair</option>
+                        <option value="3">⭐⭐⭐ - Good</option>
+                        <option value="4">⭐⭐⭐⭐ - Very Good</option>
+                        <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="reviewFeedback">Your Feedback:</label>
+                    <textarea id="reviewFeedback" name="reviewFeedback" rows="4" placeholder="Write your review here..." required></textarea>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="button" class="submit-btn" id="submitReviewBtn">Submit Review</button>
+                    <button type="reset" class="reset-btn">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('submitReviewBtn').addEventListener('click', function() {
+            // Get the selected doctors
+            const selectedDoctors = [];
+            const checkboxes = document.querySelectorAll('.doctor-checkbox:checked');
+            checkboxes.forEach(function(checkbox) {
+                selectedDoctors.push(checkbox.getAttribute('data-doctor-name'));
+            });
+
+            // If there are selected doctors and the review is filled out
+            if (selectedDoctors.length > 0 && document.getElementById('reviewFeedback').value.trim() !== '') {
+                const patientName = document.getElementById('patientName').value.trim();
+                const rating = document.querySelector('input[name="rating"]:checked');
+                if (patientName && rating) {
+                    alert(`Review submitted for: ${selectedDoctors.join(', ')}\n\nPatient Name: ${patientName}\nRating: ${rating.value} stars\nFeedback: ${document.getElementById('reviewFeedback').value}`);
+                } else {
+                    alert('Please fill out all fields.');
+                }
+            } else {
+                alert('Please select a doctor to provide feedback.');
+            }
+        });
+    </script>
+</body>
+</html>
